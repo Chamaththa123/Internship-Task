@@ -100,7 +100,12 @@ const DataList = () => {
                 <td>{item.NIC}</td>
                 <td>{item.discount_id}</td>
                 <td>
-                  <a className="btn btn-warning">Update</a>
+                  <a
+                    className="btn btn-warning"
+                    href={`/Update/${item.idCustomer}`}
+                  >
+                    Update
+                  </a>
                 </td>
                 <td>
                   {/* delete component */}
