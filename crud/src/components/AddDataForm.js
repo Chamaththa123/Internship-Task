@@ -3,8 +3,7 @@ import axios from "axios";
 import "../styles/AddDataForm.css";
 
 function AddDataForm() {
-
-    //inital userdata
+  //inital userdata
   const userData = {
     Full_Name: "",
     City: "",
@@ -33,13 +32,13 @@ function AddDataForm() {
     event.preventDefault();
 
     try {
-       await axios.post(
+      await axios.post(
         "https://interview.supershinecarcare.lk/api/customer",
         formData
       );
-      window.alert("Inserted data");
-      setFormData(userData); // reset form 
-      window.location.reload();  //reload page
+      window.alert("Inserted data succefully !!");
+      setFormData(userData); // reset form
+      window.location.reload(); //reload page
     } catch (error) {
       console.error("Error inserting data:", error);
     }

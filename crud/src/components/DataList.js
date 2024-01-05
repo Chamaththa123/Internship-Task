@@ -1,35 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../styles/DataList.css";
 import AddDataForm from "./AddDataForm";
 
 const DataList = () => {
-  const [data, setData] = useState([]); //state for store data
-  const [loading, setLoading] = useState(true); //loading state
-  const [showForm, setShowForm] = useState(false); // state for add form visibility
+  const [userData, setUserData] = useState([]); // State to store data
+  const [isLoading, setIsLoading] = useState(true); //loading state
+  const [showForm, setShowForm] = useState(false); // State for add form visibility
 
   useEffect(() => {
-    const getUserData = async () => {
+    const fetchData = async () => {
       try {
-        //get data from API
         const result = await axios.get(
           "https://interview.supershinecarcare.lk/api/customer"
         );
-
-        setData(result.data);
-        setLoading(false); //update loading state
+        setUserData(result.data);
       } catch (error) {
-        //display errorn in console
-        console.log("Error In Fetching  Data", error);
-        //display error in alert
-        window.alert("Error In Fetching  Data - " + error);
+        window.alert("Error fetching data - " + error); //error handling for API requests
+      } finally {
+        setIsLoading(false); //update loading state
       }
     };
 
-    //call function
-    getUserData();
+    fetchData();
   }, []);
 
-  //form visibility function
+  // Form visibility function
   const formAction = () => {
     setShowForm(!showForm);
   };
@@ -44,68 +40,69 @@ const DataList = () => {
           <AddDataForm />
         </div>
       )}
+
       <h4 className="text-center mt-5 mb-5">All Users List</h4>
-
-      {/* display data in table */}
-      {loading ? (
+      {isLoading ? (
+        // loading indicators
         <div className="text-center mt-4">
-          <p>Loading User Details ..... Please Wait</p>
-          <div class="spinner-grow text-primary">
-            <span class="visually-hidden">Loading...</span>
+          <p>Loading User Details... Please Wait</p>
+          <div className="spinner-grow text-primary">
+            <span className="visually-hidden">Loading...</span>
           </div>
-          <div class="spinner-grow text-primary">
-            <span class="visually-hidden">Loading...</span>
+          <div className="spinner-grow text-primary">
+            <span className="visually-hidden">Loading...</span>
           </div>
-          <div class="spinner-grow text-primary">
-            <span class="visually-hidden">Loading...</span>
+          <div className="spinner-grow text-primary">
+            <span className="visually-hidden">Loading...</span>
           </div>
         </div>
+      ) : userData.length === 0 ? (
+        //check whether data avilabe or not
+        <p className="msg">No User Data Available.</p>
       ) : (
-        <div style={{ overflowX: "auto" }}>
-          <table className="table table-hover">
-            <thead className="table-dark">
-              <tr>
-                <th></th>
-                <th>Customer Id</th>
-                <th>Full Name</th>
-                <th>City</th>
-                <th>Date of Birth</th>
-                <th>Contact No</th>
-                <th>Email</th>
-                <th>Address 01</th>
-                <th>Address 02</th>
-                <th>NIC</th>
-                <th>Discount Id</th>
-                <th></th>
-                <th></th>
+        //display data
+        <table className="table table-hover">
+          <thead className="table-dark">
+            <tr>
+              <th></th>
+              <th>Customer Id</th>
+              <th>Full Name</th>
+              <th>City</th>
+              <th>Date of Birth</th>
+              <th>Contact No</th>
+              <th>Email</th>
+              <th>Address 01</th>
+              <th>Address 02</th>
+              <th>NIC</th>
+              <th>Discount Id</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {userData.map((item, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{item.idCustomer}</td>
+                <td>{item.Full_Name}</td>
+                <td>{item.City}</td>
+                <td>{item.DOB}</td>
+                <td>{item.TP}</td>
+                <td>{item.Email}</td>
+                <td>{item.Address1}</td>
+                <td>{item.Address2}</td>
+                <td>{item.NIC}</td>
+                <td>{item.discount_id}</td>
+                <td>
+                  <button className="btn btn-warning">Update</button>
+                </td>
+                <td>
+                  <button className="btn btn-danger">Delete</button>
+                </td>
               </tr>
-            </thead>
-
-            {data.map((item, index) => (
-              <tbody>
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{item.idCustomer}</td>
-                  <td>{item.Full_Name}</td>
-                  <td>{item.City}</td>
-                  <td>{item.DOB}</td>
-                  <td>{item.TP}</td>
-                  <td>{item.Email}</td>
-                  <td>{item.Address1}</td>
-                  <td>{item.Address2}</td>
-                  <td>{item.NIC}</td>
-                  <td>{item.discount_id}</td>
-                  <td>
-                    <button className="btn btn-warning">Update</button>
-                  </td>
-                  <td>
-                    <button className="btn btn-danger">Delete</button>
-                  </td>
-                </tr>
-              </tbody>
             ))}
-          </table>
-        </div>
+          </tbody>
+        </table>
       )}
     </div>
   );
