@@ -8,6 +8,7 @@ const DataList = () => {
   const [userData, setUserData] = useState([]); // State to store data
   const [isLoading, setIsLoading] = useState(true); //loading state
   const [showForm, setShowForm] = useState(false); // State for add form visibility
+  const [deletemsg, setDeletemsg] = useState(""); // State for delete msg
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +35,7 @@ const DataList = () => {
   //handle delete
   const handleDelete = (id) => {
     setUserData(userData.filter((item) => item.idCustomer !== id)); // Remove deleted item from state
+    setDeletemsg(`User with ID ${id} has been deleted.`);
   };
 
   return (
@@ -48,6 +50,7 @@ const DataList = () => {
       )}
 
       <h4 className="text-center mt-5 mb-5">All Users List</h4>
+      {deletemsg && <div class="alert alert-danger">{deletemsg}</div>}
       {isLoading ? (
         // loading indicators
         <div className="text-center mt-4">

@@ -17,7 +17,8 @@ function AddDataForm() {
   };
 
   const [formData, setFormData] = useState(userData); //state for manage user data
-
+  const [nicError, setNicError] = useState(""); // State for nic validation
+  const [tpError, setTpError] = useState(""); // state for contact no validation
   //function to handle inputs
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -30,6 +31,16 @@ function AddDataForm() {
   //function for form submition
   const handleSubmit = async (event) => {
     event.preventDefault();
+//validate nic
+    if (formData.NIC.length !== 10 || !formData.NIC.endsWith("v")) {
+      setNicError("NIC should be 9 digits long and end with 'v'");
+      return;
+    }
+
+    if (formData.TP.length !== 10) {
+      setTpError("Contact Number should be 10 digits");
+      return;
+    }
 
     try {
       await axios.post(
@@ -47,6 +58,13 @@ function AddDataForm() {
   return (
     <div>
       <h4 className="text-center">Add New User</h4>
+      {nicError && <div class="alert alert-danger">
+  {nicError}
+</div>}
+
+{tpError && <div class="alert alert-danger">
+  {tpError}
+</div>}
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="column">
