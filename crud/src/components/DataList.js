@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/DataList.css";
 import AddDataForm from "./AddDataForm";
+import DeleteDataButton from "./DeleteDataButton";
 
 const DataList = () => {
   const [userData, setUserData] = useState([]); // State to store data
@@ -28,6 +29,11 @@ const DataList = () => {
   // Form visibility function
   const formAction = () => {
     setShowForm(!showForm);
+  };
+
+  //handle delete
+  const handleDelete = (id) => {
+    setUserData(userData.filter((item) => item.idCustomer !== id)); // Remove deleted item from state
   };
 
   return (
@@ -94,10 +100,14 @@ const DataList = () => {
                 <td>{item.NIC}</td>
                 <td>{item.discount_id}</td>
                 <td>
-                  <button className="btn btn-warning">Update</button>
+                  <a className="btn btn-warning">Update</a>
                 </td>
                 <td>
-                  <button className="btn btn-danger">Delete</button>
+                  {/* delete component */}
+                  <DeleteDataButton
+                    id={item.idCustomer}
+                    onDelete={handleDelete}
+                  />
                 </td>
               </tr>
             ))}
