@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import AddDataForm from "./AddDataForm";
 
 const DataList = () => {
   const [data, setData] = useState([]); //state for store data
@@ -38,7 +39,11 @@ const DataList = () => {
       <button className="btn btn-primary mt-4" onClick={formAction}>
         Click to Add User
       </button>
-      {showForm && <div>scsdcsdvsdvsd</div>}
+      {showForm && (
+        <div>
+          <AddDataForm />
+        </div>
+      )}
       <h4 className="text-center mt-5 mb-5">All Users List</h4>
 
       {/* display data in table */}
