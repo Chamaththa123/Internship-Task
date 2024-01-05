@@ -5,3 +5,13 @@
 .logo {
     width: 8rem
 }
+
+@media screen and (max-width:768px) {
+    .navbar {
+        background-color: #F4F3F3;
+    }
+
+    .logo {
+        width: 6rem;
+    }
+}
