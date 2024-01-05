@@ -7,7 +7,6 @@ function UpdateDataForm() {
   const { id } = useParams(); //get id from url
   const [userData, setUserData] = useState({}); //state for hold fetch data
   const [isLoading, setIsLoading] = useState(true); //loading state
-  // const history = useHistory();
   //hold form data
   const [formData, setFormData] = useState({
     Full_Name: "",
