@@ -70,7 +70,8 @@ const DataList = () => {
         <p className="msg">No User Data Available.</p>
       ) : (
         //display data
-        <table className="table table-hover">
+        <div className="tableB">
+          <table className="table table-hover">
           <thead className="table-dark">
             <tr>
               <th></th>
@@ -121,6 +122,7 @@ const DataList = () => {
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );
